@@ -1,19 +1,37 @@
 plugins {
     id 'java'
+    id "io.freefair.lombok" version "5.0.1"
 }
 
 group 'ru.netology'
 version '1.0-SNAPSHOT'
+
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    testImplementation 'com.codeborne:selenide:6.1.1'
+    testImplementation 'com.github.javafaker:javafaker:1.0.2'
+    testImplementation 'com.google.code.gson:gson:2.8.9'
+    testImplementation 'mysql:mysql-connector-java:8.0.18'
+    testImplementation 'org.postgresql:postgresql:42.3.1'
+    testImplementation 'commons-dbutils:commons-dbutils:1.7'
+
+    testImplementation 'io.qameta.allure:allure-selenide:2.16.1'
+    testImplementation 'io.qameta.allure:allure-rest-assured:2.16.1'
 }
 
 test {
     useJUnitPlatform()
+    systemProperty 'selenide.headless', System.getProperty('selenide.headless')
+    systemProperty "db.url", System.getProperty("db.url")
+    systemProperty "login", System.getProperty("login", "app")
+    systemProperty "password", System.getProperty("password", "pass")
+    systemProperty "app.url", System.getProperty("app.url", "http://localhost:8080")
 }
