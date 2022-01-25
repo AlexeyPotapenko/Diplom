@@ -2,27 +2,25 @@ package ru.netology.web.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import ru.netology.web.data.DataHelper;
 
 import java.time.Duration;
 
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
-public class CardPayment {
-    private SelenideElement buyTour = $$(".button").find(exactText("Купить"));
-    private SelenideElement buyTourInCredit = $$(".button").find(exactText("Купить в кредит"));
-    private SelenideElement inputCardNumber = $("input[type=\"text\"][placeholder=\"0000 0000 0000 0000\"]");
-    private SelenideElement inputMonth = $("input[type=\"text\"][placeholder=\"08\"]");
-    private SelenideElement inputYear = $("input[type=\"text\"][placeholder=\"22\"]");
-    private SelenideElement inputOwner = $$(".input").find(exactText("Владелец")).$(".input__control");
-    private SelenideElement inputCVC = $("input[type=\"text\"][placeholder=\"999\"]");
-    private SelenideElement buyContinue = $$(".button").find(exactText("Продолжить"));
+public class BuyInCredit {
 
-    private SelenideElement checkApprovedMessage = $$(".notification__title").find(exactText("Успешно"));
+    private SelenideElement heading = $$(".heading").find(exactText("Оплата по карте"));
+    private static SelenideElement inputCardNumber = $("input[type=\"text\"][placeholder=\"0000 0000 0000 0000\"]");
+    private static SelenideElement inputMonth = $("input[type=\"text\"][placeholder=\"08\"]");
+    private static SelenideElement inputYear = $("input[type=\"text\"][placeholder=\"22\"]");
+    private static SelenideElement inputOwner = $$(".input").find(exactText("Владелец")).$(".input__control");
+    private static SelenideElement inputCVC = $("input[type=\"text\"][placeholder=\"999\"]");
+    private static SelenideElement buyContinue = $$(".button").find(exactText("Продолжить"));
+    private static SelenideElement checkApprovedMessage = $$(".notification__title").find(exactText("Успешно"));
     private SelenideElement checkDeclinedMessage = $$(".notification__title").find(exactText("Ошибка"));
-    private SelenideElement checkDeclinedMessageClose = $$(".notification__closer").last();
-
     private SelenideElement checkErrorMessageCard = $$(".input__top").find(exactText("Номер карты")).parent().
             $$(".input__sub").find(exactText("Неверный формат"));
     private SelenideElement checkErrorMessageMonth = $$(".input__top").find(exactText("Месяц")).parent().
@@ -37,36 +35,20 @@ public class CardPayment {
             $$(".input__sub").find(exactText("Неверный формат"));
     private SelenideElement checkErrorMessageCVC = $$(".input__top").find(exactText("CVC/CVV")).parent().
             $$(".input__sub").find(exactText("Неверный формат"));
+    private SelenideElement buyTour = $$(".button").find(exactText("Купить"));
+    private SelenideElement buyTourInCredit = $$(".button").find(exactText("Купить в кредит"));
 
-
-    public void debitPurchase() {
-        buyTour.click();
-    }
-
-    public void creditPurchase() {
-        buyTourInCredit.click();
-    }
-
-    public CardPayment pageFieldInfo(DataHelper.CardInfo info) {
-        inputCardNumber.setValue(info.getCardNumber());
-        inputMonth.setValue(info.getMonth());
-        inputYear.setValue(info.getYear());
-        inputOwner.setValue(info.getOwner());
-        inputCVC.setValue(info.getCvc());
+    public void pageFieldInfo(String cardNumber, String month, String year, String owner, String cvc) {
+        inputCardNumber.setValue(cardNumber);
+        inputMonth.setValue(month);
+        inputYear.setValue(year);
+        inputOwner.setValue(owner);
+        inputCVC.setValue(cvc);
         buyContinue.click();
-        return new CardPayment();
     }
 
-    public void close() {
-        checkDeclinedMessageClose.should(Condition.visible, Duration.ofSeconds(15));
-    }
-
-    public void checkApprovedMessage() {
+    public static void checkApprovedMessage() {
         checkApprovedMessage.should(Condition.visible, Duration.ofSeconds(15));
-    }
-
-    public void checkApprovedMessageNotVisible() {
-        checkApprovedMessage.shouldBe(disappear);
     }
 
     public void checkDeclinedMessage() {
@@ -104,4 +86,5 @@ public class CardPayment {
     public String checkLengthOwner() {
         return String.valueOf(inputOwner.getValue());
     }
+
 }
