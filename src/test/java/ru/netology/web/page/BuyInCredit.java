@@ -31,7 +31,7 @@ public class BuyInCredit {
             $$(".input__sub").find(exactText("Истёк срок действия карты"));
     private SelenideElement checkErrorMessageOwner = $$(".input__top").find(exactText("Владелец")).parent().
             $$(".input__sub").find(exactText("Поле обязательно для заполнения"));
-    private SelenideElement checkErrorMessageOwnerSimbol = $$(".input__top").find(exactText("Владелец")).parent().
+    private SelenideElement checkErrorMessageOwnerSymbol = $$(".input__top").find(exactText("Владелец")).parent().
             $$(".input__sub").find(exactText("Неверный формат"));
     private SelenideElement checkErrorMessageCVC = $$(".input__top").find(exactText("CVC/CVV")).parent().
             $$(".input__sub").find(exactText("Неверный формат"));
@@ -76,7 +76,7 @@ public class BuyInCredit {
     }
 
     public void checkErrorMessageOwnerSymbol() {
-        checkErrorMessageOwnerSimbol.shouldBe(visible);
+        checkErrorMessageOwnerSymbol.shouldBe(visible);
     }
 
     public void checkErrorMessageCVC() {

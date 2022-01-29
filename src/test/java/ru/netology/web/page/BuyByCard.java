@@ -10,7 +10,6 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
-
 public class BuyByCard {
 
     private SelenideElement heading = $$(".heading").find(exactText("Оплата по карте"));
@@ -24,13 +23,13 @@ public class BuyByCard {
     private SelenideElement checkDeclinedMessage = $$(".notification__title").find(exactText("Ошибка"));
     private SelenideElement checkErrorMessageCard = $$(".input__top").find(exactText("Номер карты")).parent().
             $$(".input__sub").find(exactText("Неверный формат"));
-    private SelenideElement checkErrorMessageMonth = $$(".input__top").find(exactText("Месяц")).parent().
+    private SelenideElement checkErrorMessageMonthForEmptyFields = $$(".input__top").find(exactText("Месяц")).parent().
             $$(".input__sub").find(exactText("Неверный формат"));
     private SelenideElement checkErrorMessageYear = $$(".input__top").find(exactText("Год")).parent().
             $$(".input__sub").find(exactText("Неверный формат"));
     private SelenideElement checkErrorMessageYearExpired = $$(".input__top").find(exactText("Год")).parent().
             $$(".input__sub").find(exactText("Истёк срок действия карты"));
-    private SelenideElement     checkErrorMessageOwner = $$(".input__top").find(exactText("Владелец")).parent().
+    private SelenideElement checkErrorMessageOwner = $$(".input__top").find(exactText("Владелец")).parent().
             $$(".input__sub").find(exactText("Поле обязательно для заполнения"));
     private SelenideElement checkErrorMessageOwnerSymbol = $$(".input__top").find(exactText("Владелец")).parent().
             $$(".input__sub").find(exactText("Неверный формат"));
@@ -49,44 +48,40 @@ public class BuyByCard {
     }
 
 
-        public static void checkApprovedMessage () {
-            checkApprovedMessage.should(Condition.visible, Duration.ofSeconds(15));
-        }
-
-        public void checkDeclinedMessage () {
-            checkDeclinedMessage.should(Condition.visible, Duration.ofSeconds(15));
-        }
-
-        public void checkErrorMessageCard () {
-            checkErrorMessageCard.shouldBe(visible);
-        }
-
-        public void checkErrorMessageMonth () {
-            checkErrorMessageMonth.should(Condition.visible, Duration.ofSeconds(15));
-        }
-
-        public void checkErrorMessageYear () {
-            checkErrorMessageYear.shouldBe(visible);
-        }
-
-        public void checkErrorMessageYearExpired () {
-            checkErrorMessageYearExpired.shouldBe(visible);
-        }
-
-        public void checkErrorMessageOwner () {
-            checkErrorMessageOwner.shouldBe(visible);
-        }
-
-        public void checkErrorMessageOwnerSymbol () {
-            checkErrorMessageOwnerSymbol.shouldBe(visible);
-        }
-
-        public void checkErrorMessageCVC () {
-            checkErrorMessageCVC.shouldBe(visible);
-        }
-
-        public static String checkLengthOwner () {
-            return String.valueOf(inputOwner.getValue());
-        }
-
+    public static void checkApprovedMessage() {
+        checkApprovedMessage.should(Condition.visible, Duration.ofSeconds(15));
     }
+
+    public void checkDeclinedMessage() {
+        checkDeclinedMessage.should(Condition.visible, Duration.ofSeconds(15));
+    }
+
+    public void checkErrorMessageCard() {
+        checkErrorMessageCard.shouldBe(visible);
+    }
+
+    public void checkErrorMessageMonthForEmptyFields() {
+        checkErrorMessageMonthForEmptyFields.should(Condition.visible, Duration.ofSeconds(15));
+    }
+
+    public void checkErrorMessageYear() {
+        checkErrorMessageYear.shouldBe(visible);
+    }
+
+    public void checkErrorMessageYearExpired() {
+        checkErrorMessageYearExpired.shouldBe(visible);
+    }
+
+    public void checkErrorMessageOwner() {
+        checkErrorMessageOwner.shouldBe(visible);
+    }
+
+    public void checkErrorMessageOwnerSymbol() {
+        checkErrorMessageOwnerSymbol.shouldBe(visible);
+    }
+
+    public void checkErrorMessageCVC() {
+        checkErrorMessageCVC.shouldBe(visible);
+    }
+
+}

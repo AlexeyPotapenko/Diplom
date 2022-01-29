@@ -12,8 +12,8 @@ import ru.netology.web.page.MainPage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.netology.web.data.DataHelper.*;
-import static ru.netology.web.data.SQLHelper.getCreditRequest;
-import static ru.netology.web.data.SQLHelper.getOrder;
+import static ru.netology.web.data.SQLHelper.*;
+import static ru.netology.web.data.SQLHelper.getPayment;
 
 public class TestBuyInCredit {
     private MainPage mainPage = new MainPage();
@@ -53,6 +53,15 @@ public class TestBuyInCredit {
     }
 
     @Test
+    void shouldPayDeclinedCreditCardNumberCard() {
+        buyInCredit.pageFieldInfo(getDeclinedCardNumber(), getMoth(), getValidYear(), getOwnerInEng(), getValidCvc());
+        buyInCredit.checkDeclinedMessage();
+        assertEquals(getOrder().getPayment_id(), getCreditRequest().getBank_id());
+        assertEquals("DECLINED", getCreditRequest().getStatus());
+
+    }
+
+    @Test
     void shouldPayCreditWithoutCardNumber() {
         buyInCredit.pageFieldInfo(getEmptyCardNumber(), getMoth(), getValidYear(), getOwnerInEng(), getValidCvc());
         buyInCredit.checkErrorMessageCard();
@@ -85,7 +94,7 @@ public class TestBuyInCredit {
     @Test
     void shouldPayApprovedCreditOwnerSymbol() {
         buyInCredit.pageFieldInfo(getApprovedCardNumber(), getMoth(), getValidYear(), getOwnerLength(), getValidCvc());
-        buyInCredit.checkErrorMessageOwnerSymbol(); // нет сообщения об ошибке
+        buyInCredit.checkErrorMessageOwnerSymbol();
     }
 
     @Test
@@ -101,8 +110,8 @@ public class TestBuyInCredit {
     }
 
     @Test
-    void shouldPayApprovedCreditCardFieldsMothNull() {
-        buyInCredit.pageFieldInfo(getApprovedCardNumber(), getMothNulls(), getValidYear(), getOwnerInEng(), getValidCvc());
-        buyInCredit.checkErrorMessageMonth(); //сообщение об ошибке не появляется ,запись в бд происходит с нулевым месяцем
+    void shouldPayApprovedCreditCardNullsCVC() {
+        buyInCredit.pageFieldInfo(getApprovedCardNumber(), getMothNulls(), getValidYear(), getOwnerInEng(), getNullsCvc());
+        buyInCredit.checkErrorMessageCVC();
     }
 }

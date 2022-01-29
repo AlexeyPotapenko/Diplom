@@ -13,20 +13,6 @@ public class SQLHelper {
     private static String user = "app";
     private static String password = "pass";
 
-    @SneakyThrows
-    public static void clearAllData() {
-        var clearCreditRequest = "DELETE FROM credit_entity;";
-        var clearOrder = "DELETE FROM order_entity;";
-        var clearPayment = "DELETE FROM payment_entity;";
-        var runner = new QueryRunner();
-        try (var conn = DriverManager.getConnection(
-                url, user, password)) {
-            runner.execute(conn, clearCreditRequest);
-            runner.execute(conn, clearOrder);
-            runner.execute(conn, clearPayment);
-        }
-    }
-
     @Data
     public static class OrderEntity {
         String credit_id;

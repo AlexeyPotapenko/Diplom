@@ -41,14 +41,13 @@ public class DataHelper {
         return new CardInfo(cardNumber, month, year, owner, cvc);
     }
 
-    static Calendar calendar = new GregorianCalendar();
-
     public static String getMoth() {
         String[] month = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
         int random = new Random().nextInt(month.length);
         return month[random];
     }
-    public static String getMothNulls(){
+
+    public static String getMothNulls() {
         return "00";
     }
 
@@ -72,9 +71,14 @@ public class DataHelper {
         return " ";
     }
 
+    public static String getNullsCvc() {
+        return "000";
+    }
+
     public static String getEmptyCardNumber() {
         return " ";
     }
+
     public static String getEmptyOwner() {
         return " ";
     }

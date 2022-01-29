@@ -7,8 +7,11 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import ru.netology.web.data.SQLHelper;
 import ru.netology.web.page.BuyByCard;
 import ru.netology.web.page.MainPage;
+
+import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.netology.web.data.DataHelper.*;
@@ -51,16 +54,14 @@ public class TestBuyByCard {
         BuyByCard.checkApprovedMessage();
         assertEquals(getOrder().getPayment_id(), getPayment().getTransaction_id());
         assertEquals("APPROVED", getPayment().getStatus());
-
     }
 
-
     @Test
-    void shouldPayDeclinedDebitCardNumberCard() {
+    void shouldPayDeclinedDebitCard() {
         buyByCard.pageFieldInfo(getDeclinedCardNumber(), getMoth(), getValidYear(), getOwnerInEng(), getValidCvc());
         buyByCard.checkDeclinedMessage();
         assertEquals(getOrder().getPayment_id(), getPayment().getTransaction_id());
-        assertEquals("DECLINED", getPayment().getStatus()); // отсутствует окно ошибки
+        assertEquals("DECLINED", getPayment().getStatus());
 
     }
 
@@ -73,7 +74,7 @@ public class TestBuyByCard {
     @Test
     void shouldPayApprovedDebitWithoutMoth() {
         buyByCard.pageFieldInfo(getApprovedCardNumber(), getEmptyMoth(), getValidYear(), getOwnerInEng(), getValidCvc());
-        buyByCard.checkErrorMessageMonth();
+        buyByCard.checkErrorMessageMonthForEmptyFields();
     }
 
     @Test
@@ -97,11 +98,11 @@ public class TestBuyByCard {
     @Test
     void shouldPayApprovedDebitOwnerSymbol() {
         buyByCard.pageFieldInfo(getApprovedCardNumber(), getMoth(), getValidYear(), getOwnerLength(), getValidCvc());
-        buyByCard.checkErrorMessageOwnerSymbol(); // нет сообщения об ошибке
+        buyByCard.checkErrorMessageOwnerSymbol();
     }
 
     @Test
-    void shouldPayApprovedDebitCardNotFull() {
+    void shouldPayApprovedDebitCardNotFullNumber() {
         buyByCard.pageFieldInfo(getNotFullCardNumber(), getMoth(), getValidYear(), getOwnerInEng(), getValidCvc());
         buyByCard.checkErrorMessageCard();
     }
@@ -113,9 +114,9 @@ public class TestBuyByCard {
     }
 
     @Test
-    void shouldPayApprovedDebitCardFieldsMothNull() {
-        buyByCard.pageFieldInfo(getApprovedCardNumber(), getMothNulls(), getValidYear(), getOwnerInEng(), getValidCvc());
-        buyByCard.checkErrorMessageMonth(); //сообщение об ошибке не появляется ,запись в бд происходит с нулевым месяцем
+    void shouldPayApprovedDebitCardNullsCVC() {
+        buyByCard.pageFieldInfo(getApprovedCardNumber(), getMothNulls(), getValidYear(), getOwnerInEng(), getNullsCvc());
+        buyByCard.checkErrorMessageCVC();
     }
 
 
