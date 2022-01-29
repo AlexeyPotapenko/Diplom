@@ -11,7 +11,7 @@ ___
 
 Перед началом автоматизации был разработан [PLAN.md](https://github.com/AlexeyPotapenko/Diplom/blob/master/Plan.md)
 
-### Количество тест-кейсов ###
+### Количество [Тест-кейсов](https://github.com/AlexeyPotapenko/Diplom/blob/master/docs/Plan.md) ###
 ___
 Общее количество тест-кейсов: 22
 
