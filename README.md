@@ -16,3 +16,7 @@ ___
  - Для использования MySQL: ```gradlew clean test "-Ddb.url=jdbc:mysql://localhost:3306/app"```
 5. Остановить SUT ```CTRL + C```
 6. Остановить контейнеры командой ```docker-compose stop``` , удалить контейнеры командой ```docker-compose down```
+
+[Отчет по итогам тестирования](https://github.com/AlexeyPotapenko/Diplom/blob/master/docs/Report.md)
+
+[Отчет по итогам автоматизации](https://github.com/AlexeyPotapenko/Diplom/blob/master/docs/Summary.md)
