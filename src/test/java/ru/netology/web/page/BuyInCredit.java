@@ -37,6 +37,12 @@ public class BuyInCredit {
             $$(".input__sub").find(exactText("Неверный формат"));
     private SelenideElement buyTour = $$(".button").find(exactText("Купить"));
     private SelenideElement buyTourInCredit = $$(".button").find(exactText("Купить в кредит"));
+    private SelenideElement checkErrorMessageMonthExpiration = $$(".input__top").find(exactText("Месяц")).parent().
+            $$(".input__sub").find(exactText("Неверно указан срок действия карты"));
+    private SelenideElement checkErrorMessageYearExpiration = $$(".input__top").find(exactText("Год")).parent().
+            $$(".input__sub").find(exactText("Неверно указан срок действия карты"));
+    private SelenideElement checkErrorMessageInvalidOwner = $$(".input__top").find(exactText("Владелец")).parent().
+            $$(".input__sub").find(exactText("Неверный формат"));
 
     public void pageFieldInfo(String cardNumber, String month, String year, String owner, String cvc) {
         inputCardNumber.setValue(cardNumber);
@@ -81,6 +87,16 @@ public class BuyInCredit {
 
     public void checkErrorMessageCVC() {
         checkErrorMessageCVC.shouldBe(visible);
+    }
+
+    public void checkErrorMessageMonthExpirationDate() {
+        checkErrorMessageMonthExpiration.shouldBe(visible);
+    }
+    public void checkErrorMessageYearExpirationDate(){
+        checkErrorMessageYearExpiration.shouldBe(visible);
+    }
+    public void checkErrorMessageInvalidOwner(){
+        checkErrorMessageInvalidOwner.shouldBe(visible);
     }
 
     public String checkLengthOwner() {

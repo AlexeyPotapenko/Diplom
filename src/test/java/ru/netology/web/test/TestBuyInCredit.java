@@ -3,30 +3,28 @@ package ru.netology.web.test;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import ru.netology.web.page.BuyInCredit;
 import ru.netology.web.page.MainPage;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.netology.web.data.DataHelper.*;
-import static ru.netology.web.data.SQLHelper.*;
-import static ru.netology.web.data.SQLHelper.getPayment;
+import static ru.netology.web.data.SQLHelper.getCreditRequest;
+import static ru.netology.web.data.SQLHelper.getOrder;
 
 public class TestBuyInCredit {
-    private MainPage mainPage = new MainPage();
-    private BuyInCredit buyInCredit = mainPage.creditPurchase();
+
+    private MainPage mainPage;
+    private BuyInCredit buyInCredit;
 
     @BeforeAll
     static void setUpAll() {
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
-    @BeforeAll
-    static void openWindow() {
-        Selenide.open("http://localhost:8080");
+    @BeforeEach
+    void openWindow() {
+        mainPage = Selenide.open("http://localhost:8080", MainPage.class);
+        buyInCredit = mainPage.creditPurchase();
     }
 
     @AfterAll
@@ -114,4 +112,45 @@ public class TestBuyInCredit {
         buyInCredit.pageFieldInfo(getApprovedCardNumber(), getMothNulls(), getValidYear(), getOwnerInEng(), getNullsCvc());
         buyInCredit.checkErrorMessageCVC();
     }
+
+    @Test
+    void shouldPayApprovedCreditCardNullsYear() {
+        buyInCredit.pageFieldInfo(getApprovedCardNumber(), getMoth(), getNullsYear(), getOwnerInEng(), getValidCvc());
+        buyInCredit.checkErrorMessageYearExpired();
+    }
+
+    @Test
+    void shouldPayApprovedDebitCardNullsMoth() {
+        buyInCredit.pageFieldInfo(getApprovedCardNumber(), getMothNulls(), getValidYear(), getOwnerInEng(), getValidCvc());
+        buyInCredit.checkErrorMessageMonthExpirationDate();
+    }// не всплывает ошибка Неверно указан срок действия карты
+    @Test
+    void shouldPayApprovedDebitCardMonthOverMax() {
+        buyInCredit.pageFieldInfo(getApprovedCardNumber(), getMonthOverMax(), getValidYear(), getOwnerInEng(), getValidCvc());
+        buyInCredit.checkErrorMessageMonthExpirationDate();
+    }
+    @Test
+    void shouldPayApprovedDebitCardYearOverMax() {
+        buyInCredit.pageFieldInfo(getApprovedCardNumber(), getMoth(), getYearOverMax(), getOwnerInEng(), getValidCvc());
+        buyInCredit.checkErrorMessageYearExpirationDate();
+    }
+    @Test
+    void shouldPayApprovedDebitCardOwnerNumbers() {
+        buyInCredit.pageFieldInfo(getApprovedCardNumber(),getMoth(),getValidYear(),getOwnerNumbers(),getValidCvc());
+        buyInCredit.checkErrorMessageInvalidOwner();
+    }//отсутствует сообщение об ошибке невенрый формат и запись в бд происходит
+    @Test
+    void shouldPayApprovedDebitCardOwnerSpecialCharacter() {
+        buyInCredit.pageFieldInfo(getApprovedCardNumber(),getMoth(),getValidYear(),getOwnerSpecialCharacter(),getValidCvc());
+        buyInCredit.checkErrorMessageInvalidOwner();//отсутствует сообщение об ошибке невенрый формат и запись в бд происходит
+    }
+    @Test
+    void shouldPayApprovedDebitCardOwnerRusName() {
+        buyInCredit.pageFieldInfo(getApprovedCardNumber(),getMoth(),getValidYear(),getOwnerRus(),getValidCvc());
+        buyInCredit.checkErrorMessageInvalidOwner();//отсутствует сообщение об ошибке невенрый формат и запись в бд происходит
+    }
+
+
+
 }
+

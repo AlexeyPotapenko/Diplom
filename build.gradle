@@ -16,7 +16,6 @@ configurations {
 }
 
 allure {
-    autoconfigure = true
     version = '2.16.1'
 
     useJUnit5 {
@@ -37,7 +36,6 @@ allure {
         testImplementation 'io.qameta.allure:allure-selenide:2.16.1'
         testImplementation 'mysql:mysql-connector-java:8.0.25'
         testImplementation 'org.postgresql:postgresql:42.3.1'
-        annotationProcessor 'org.projectlombok:lombok:1.918.22'
 
         testCompileOnly 'org.projectlombok:lombok:1.18.22'
         testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
@@ -46,6 +44,6 @@ allure {
     test {
         useJUnitPlatform()
         systemProperty 'selenide.headless', System.getProperty('selenide.headless')
-        systemProperty 'datasource.url', System.getProperty('datasource.url')
+        systemProperty 'db.url', System.getProperty('db.url')
     }
 }

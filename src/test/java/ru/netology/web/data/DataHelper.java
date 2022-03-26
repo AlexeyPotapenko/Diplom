@@ -7,10 +7,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.Random;
 
 public class DataHelper {
     static Faker faker = new Faker();
+    static Faker fakerRus = new Faker(new Locale("ru"));
+
 
     private DataHelper() {
     }
@@ -37,10 +40,6 @@ public class DataHelper {
     }
 
 
-    public static CardInfo getCardInfo(String cardNumber, String month, String year, String owner, String cvc) {
-        return new CardInfo(cardNumber, month, year, owner, cvc);
-    }
-
     public static String getMoth() {
         String[] month = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
         int random = new Random().nextInt(month.length);
@@ -49,6 +48,9 @@ public class DataHelper {
 
     public static String getMothNulls() {
         return "00";
+    }
+    public static String getOwnerRus() {
+        return fakerRus.name().fullName();
     }
 
     public static String getEmptyMoth() {
@@ -65,6 +67,22 @@ public class DataHelper {
 
     public static String getEmptyYear() {
         return " ";
+    }
+
+    public static String getMonthOverMax() {
+        return "13";
+    }
+
+    public static String getYearOverMax() {
+        return LocalDate.now().plusYears(10).format(DateTimeFormatter.ofPattern("yy"));
+    }
+
+    public static String getOwnerNumbers() {
+        return "12345";
+    }
+
+    public static String getOwnerSpecialCharacter() {
+        return "$#@$%&^";
     }
 
     public static String getEmptyCVC() {
@@ -85,6 +103,10 @@ public class DataHelper {
 
     public static String getOwnerInEng() {
         return faker.name().lastName() + " " + faker.name().firstName();
+    }
+
+    public static String getNullsYear() {
+        return "00";
     }
 
 

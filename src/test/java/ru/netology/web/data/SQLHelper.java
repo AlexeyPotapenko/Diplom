@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 
 public class SQLHelper {
 
-    private static String url = "jdbc:mysql://localhost:3306/app";
+    private static String url = System.getProperty("db.url");
     private static String user = "app";
     private static String password = "pass";
 
