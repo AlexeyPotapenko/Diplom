@@ -1,11 +1,9 @@
 # Дипломный проект профессии "Тестировщик ПО" #
 ___
 ### Необходимое окружение: ###
-1. Установленая IntelliJ IDEA;
-2. Установленный Docker;
-3. Установленный Node.js;
-4. Java 11;
-5. Браузер;
+1. Установленный Docker;
+2. Установленный Node.js;
+3. Браузер;
 
 ### Запуск приложения: ###
 1. Склонировать репозиторий: https://github.com/AlexeyPotapenko/Diplom.git;
@@ -18,3 +16,7 @@ ___
  - Для использования MySQL: ```gradlew clean test "-Ddb.url=jdbc:mysql://localhost:3306/app"```
 5. Остановить SUT ```CTRL + C```
 6. Остановить контейнеры командой ```docker-compose stop``` , удалить контейнеры командой ```docker-compose down```
+
+[Отчет по итогам тестирования](https://github.com/AlexeyPotapenko/Diplom/blob/master/docs/Report.md)
+
+[Отчет по итогам автоматизации](https://github.com/AlexeyPotapenko/Diplom/blob/master/docs/Summary.md)
